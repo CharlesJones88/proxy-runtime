@@ -6,9 +6,9 @@
     "test": "node tests"
   },
   "dependencies": {
-    "@solo-io/proxy-runtime": "file:../.."
+    "@charlesjones88/proxy-runtime": "file:../.."
   },
   "devDependencies": {
-    "assemblyscript": "^0.21.3"
+    "assemblyscript": "^0.28.9"
   }
 }

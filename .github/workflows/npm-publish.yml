@@ -9,20 +9,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2.1.0
+      uses: actions/checkout@v5
+
     - name: Set up Node.js
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v6
       with:
-        node-version: 16.17.0
-    - name: Publish if version has been updated
-      uses: pascalgn/npm-publish-action@4f4bf159e299f65d21cd1cbd96fc5d53228036df
-      with: # All of theses inputs are optional
-        tag_name: "v%s"
-        tag_message: "v%s"
-        # !! NOTE: For this action to work, the last commit MUST match this pattern!
-        # since we squash commits, this means the PR name MUST match this pattern
-        # for an example, see https://github.com/solo-io/proxy-runtime/pull/50
-        commit_pattern: "^Release (\\S+)"
-      env: # More info about the environment variables in the README
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Leave this as is, it's automatically generated
-        NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }} # You need to set this in your repo settings
+        node-version: 'lts/*'
+    # - name: Publish if version has been updated
+    #   uses: pascalgn/npm-publish-action@4f4bf159e299f65d21cd1cbd96fc5d53228036df
+    #   with: # All of theses inputs are optional
+    #     tag_name: "v%s"
+    #     tag_message: "v%s"
+    #     # !! NOTE: For this action to work, the last commit MUST match this pattern!
+    #     # since we squash commits, this means the PR name MUST match this pattern
+    #     # for an example, see https://github.com/solo-io/proxy-runtime/pull/50
+    #     commit_pattern: "^Release (\\S+)"
+    #   env: # More info about the environment variables in the README
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Leave this as is, it's automatically generated
+    #     NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }} # You need to set this in your repo settings

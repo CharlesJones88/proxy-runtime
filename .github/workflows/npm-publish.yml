@@ -1,28 +1,43 @@
 name: npm-publish
 on:
   push:
-    branches:
-      - master # Change this to your default branch
+    tags:
+      - 'v*.*.*'
+
 jobs:
   npm-publish:
     name: npm-publish
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2.1.0
-    - name: Set up Node.js
-      uses: actions/setup-node@v1
+      uses: actions/checkout@v5
+
+    - name: Install pnpm
+      uses: pnpm/action-setup@v4
       with:
-        node-version: 16.17.0
-    - name: Publish if version has been updated
-      uses: pascalgn/npm-publish-action@4f4bf159e299f65d21cd1cbd96fc5d53228036df
-      with: # All of theses inputs are optional
-        tag_name: "v%s"
-        tag_message: "v%s"
-        # !! NOTE: For this action to work, the last commit MUST match this pattern!
-        # since we squash commits, this means the PR name MUST match this pattern
-        # for an example, see https://github.com/solo-io/proxy-runtime/pull/50
-        commit_pattern: "^Release (\\S+)"
-      env: # More info about the environment variables in the README
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Leave this as is, it's automatically generated
-        NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }} # You need to set this in your repo settings
+        run_install: false
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v6
+      with:
+        node-version: 'lts/*'
+
+    - name: Get Tag
+      id: tag_version
+      run: |
+        VERSION=${GITHUB_REG#refs/tags/v}
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+    - name: Update version
+      run: |
+        pnpm version ${{ steps.tag_version.outputs.version }} --no-git-tag-version --allow-same-version
+
+    - name: Install dependencies
+      env:
+        NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: pnpm install --frozen-lockfile
+
+    - name: Publish
+      env:
+        NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: pnpm publish --no-git-checks

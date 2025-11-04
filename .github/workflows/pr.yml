@@ -10,13 +10,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2.1.0
-    - name: Set up Node.js
-      uses: actions/setup-node@v1
+      uses: actions/checkout@v5
+
+    - name: Install pnpm
+      uses: pnpm/action-setup@v4
       with:
-        node-version: 16.17.0
-    - run: npm install
-    - run: npm run asbuild
+        run_install: false
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v6
+      with:
+        node-version: 'lts/*'
+
+    - run: pnpm install
+    - run: pnpm asbuild
     # make sure example filter builds:
-    - run: cd examples/auth && npm install && npm run asbuild
-    - run: cd examples/addheader && npm install && npm run asbuild
+    - run: cd examples/auth && pnpm install && pnpm asbuild
+    - run: cd examples/addheader && pnpm install && pnpm asbuild

@@ -795,7 +795,7 @@ export class HttpCallback {
 }
 class GrpcCallback {
   ctx: Object;
-  cb: (c: Object) => void;
+  cb: (c: Context) => void;
   constructor(ctx: Object, cb: (c: Context) => void) {
     this.ctx = ctx;
     this.cb = cb;

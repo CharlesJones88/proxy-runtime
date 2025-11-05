@@ -25,6 +25,7 @@
     "url": "git+https://github.com/charlesjones88/proxy-runtime.git"
   },
   "publishConfig": {
+    "access": "public",
     "registry": "https://npm.pkg.github.com"
   },
   "keywords": [

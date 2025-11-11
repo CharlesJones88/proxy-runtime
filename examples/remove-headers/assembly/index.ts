@@ -45,18 +45,18 @@ class RemoveHeader extends Context {
       return FilterHeadersStatusValues.Continue;
     }
 
-    let hdr_arr = stream_context.headers.response.get_headers();
-    let num_hdrs: u32 = hdr_arr.length;
+    const hdr_arr = stream_context.headers.response.get_headers();
+    const num_hdrs: u32 = hdr_arr.length;
     // search all header keys for the configured tokens and remove the matching headers from response
     for (let i: u32 = 0; i < num_hdrs; i++) {
-      let hdr_key: string = String.UTF8.decode(hdr_arr[i].key);
+      const hdr_key: string = String.UTF8.decode(hdr_arr[i].key);
       log(
         LogLevelValues.debug,
         "onResponseHeaders processing header: " + hdr_key
       );
-      let num_tokens: u32 = this.rm_tokens.length;
+      const num_tokens: u32 = this.rm_tokens.length;
       for (let j: u32 = 0; j < num_tokens; j++) {
-        let rm_token: string = this.rm_tokens[j];
+        const rm_token: string = this.rm_tokens[j];
         if (hdr_key.startsWith(rm_token)) {
           stream_context.headers.response.remove(hdr_key);
           log(

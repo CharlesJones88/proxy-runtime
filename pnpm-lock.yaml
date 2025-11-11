@@ -11,6 +11,9 @@ importers:
       assemblyscript:
         specifier: ^0.28.9
         version: 0.28.9
+      assemblyscript-prettier:
+        specifier: ^3.0.1
+        version: 3.0.1(prettier@3.6.2)
       http-server:
         specifier: ^0.12.3
         version: 0.12.3
@@ -20,6 +23,9 @@ importers:
       minimist:
         specifier: '>=1.2.2'
         version: 1.2.8
+      prettier:
+        specifier: ^3.6.2
+        version: 3.6.2
       typedoc:
         specifier: ^0.28.14
         version: 0.28.14(typescript@3.7.7)
@@ -91,6 +97,16 @@ packages:
     resolution: {integrity: sha512-NbdMezxqf94cnNfWLL7V/im0Ub+Anbb0IoZhvzie8+4HJ4nMQuzHuy49FkGYCJK2yAloZ3meiB6AVMClbrI1vg==}
     engines: {node: '>=8'}
 
+  assemblyscript-prettier@3.0.1:
+    resolution: {integrity: sha512-q5D9rJOr1xG8p2MdcAF3wvIBPrmHaKgenJbmYrwM1T96sHKFeTOfCtgHHmrDnrqoly7wSGfWtbE84omC1IUJEA==}
+    peerDependencies:
+      prettier: ^3.0.0
+
+  assemblyscript@0.27.37:
+    resolution: {integrity: sha512-YtY5k3PiV3SyUQ6gRlR2OCn8dcVRwkpiG/k2T5buoL2ymH/Z/YbaYWbk/f9mO2HTgEtGWjPiAQrIuvA7G/63Gg==}
+    engines: {node: '>=18', npm: '>=10'}
+    hasBin: true
+
   assemblyscript@0.28.9:
     resolution: {integrity: sha512-UQqIYSUuJzqQP6fKTs1CtanyxmnDk7K+Kmj/J67agimxDqxjdMnTF/y9rEHUBL+K/VIEV4QYu57RMrL5LwbAvw==}
     engines: {node: '>=20', npm: '>=10'}
@@ -112,6 +128,10 @@ packages:
 
   batch@0.6.1:
     resolution: {integrity: sha512-x+VAiMRL6UPkx+kudNvxTl6hB2XNNCG2r+7wixVfIYwu/2HKRXimwQyaumLjMveWvT2Hkd/cAJw+QBMfJ/EKVw==}
+
+  binaryen@116.0.0-nightly.20240114:
+    resolution: {integrity: sha512-0GZrojJnuhoe+hiwji7QFaL3tBlJoA+KFUN7ouYSDGZLSo9CKM8swQX8n/UcbR0d1VuZKU+nhogNzv423JEu5A==}
+    hasBin: true
 
   binaryen@123.0.0-nightly.20250530:
     resolution: {integrity: sha512-d1zPHBN5YlOd3Ff+OUxvVExuFeh8heSnqe+X3bjItFxGLvn4VGBKmrvv7pgy/cRhrIUGuPW138iaWfDhwjyDqg==}
@@ -719,6 +739,11 @@ packages:
     resolution: {integrity: sha512-rEwq/ZHlJIKw++XtLAO8PPuOQA/zaPJOZJ37BVuN97nLpMJeuDVLVGRwbFoBgLudgdTMP2hdRJP++H+8QOA3vg==}
     engines: {node: '>= 10.12'}
 
+  prettier@3.6.2:
+    resolution: {integrity: sha512-I7AIg5boAr5R0FFtJ6rCfD+LFsWHp81dolrFD8S79U9tb8Az2nGrJncnMSnys+bpQJfRUzqs9hnA81OAA3hCuQ==}
+    engines: {node: '>=14'}
+    hasBin: true
+
   process-nextick-args@2.0.1:
     resolution: {integrity: sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==}
 
@@ -988,6 +1013,16 @@ snapshots:
 
   array-back@4.0.2: {}
 
+  assemblyscript-prettier@3.0.1(prettier@3.6.2):
+    dependencies:
+      assemblyscript: 0.27.37
+      prettier: 3.6.2
+
+  assemblyscript@0.27.37:
+    dependencies:
+      binaryen: 116.0.0-nightly.20240114
+      long: 5.3.2
+
   assemblyscript@0.28.9:
     dependencies:
       binaryen: 123.0.0-nightly.20250530
@@ -1004,6 +1039,8 @@ snapshots:
       safe-buffer: 5.1.2
 
   batch@0.6.1: {}
+
+  binaryen@116.0.0-nightly.20240114: {}
 
   binaryen@123.0.0-nightly.20250530: {}
 
@@ -1657,6 +1694,8 @@ snapshots:
       debug: 4.4.3
     transitivePeerDependencies:
       - supports-color
+
+  prettier@3.6.2: {}
 
   process-nextick-args@2.0.1: {}
 

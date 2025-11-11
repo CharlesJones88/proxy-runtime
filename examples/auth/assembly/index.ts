@@ -35,10 +35,10 @@ class Auth extends Context {
 
   onRequestHeaders(a: u32, end_of_stream: bool): FilterHeadersStatusValues {
     log(LogLevelValues.debug, "onRequestHeaders called!");
-    let cluster = this.root_context.getConfiguration();
+    const cluster = this.root_context.getConfiguration();
     log(LogLevelValues.debug, "onRequestHeaders called!" + cluster);
     // make an http call to the auth cluster
-    let result = this.root_context.httpCall(
+    const result = this.root_context.httpCall(
       cluster,
       // provide the auth cluster our headers, so it can make an auth decision.
       stream_context.headers.request.get_headers(),
@@ -57,13 +57,13 @@ class Auth extends Context {
         body_size: usize,
         trailers: u32
       ) => {
-        let context = origin_context as Auth;
+        const context = origin_context as Auth;
         let allow = false;
 
         if (headers != 0) {
           // if we have a response, allow the request if we have a 200
           log(LogLevelValues.debug, "callback called!");
-          let status = stream_context.headers.http_callback.get(":status");
+          const status = stream_context.headers.http_callback.get(":status");
           log(
             LogLevelValues.debug,
             "status:" +
@@ -80,7 +80,7 @@ class Auth extends Context {
           }
         }
 
-        let buf = get_buffer_bytes(
+        const buf = get_buffer_bytes(
           BufferTypeValues.HttpCallResponseBody,
           0,
           body_size as u32

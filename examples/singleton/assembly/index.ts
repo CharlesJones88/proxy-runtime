@@ -34,17 +34,17 @@ class AuthSingleton extends RootContext {
   }
 
   updateConfig(): void {
-    let h: Headers = [];
-    h.push(makeHeaderPair(":path", "/fetch"));
-    h.push(makeHeaderPair(":method", "GET"));
-    h.push(makeHeaderPair(":authority", "foo"));
-    let cluster = this.getConfiguration();
+    const headers: Headers = [];
+    headers.push(makeHeaderPair(":path", "/fetch"));
+    headers.push(makeHeaderPair(":method", "GET"));
+    headers.push(makeHeaderPair(":authority", "foo"));
+    const cluster = this.getConfiguration();
     log(LogLevelValues.info, "singleton updateConfig! " + cluster);
 
-    let result = this.httpCall(
+    const result = this.httpCall(
       cluster,
       // provide the auth cluster our headers, so it can make an auth decision.
-      h,
+      headers,
       // no need for body or trailers
       new ArrayBuffer(0),
       [],
@@ -61,7 +61,7 @@ class AuthSingleton extends RootContext {
         trailers: u32
       ) => {
         log(LogLevelValues.info, "callback called!");
-        let bytes = get_buffer_bytes(
+        const bytes = get_buffer_bytes(
           BufferTypeValues.HttpCallResponseBody,
           0,
           body_size
@@ -88,11 +88,11 @@ class AuthRoot extends RootContext {
   }
 
   syncConfig(): void {
-    let data = get_shared_data("data");
+    const data = get_shared_data("data");
     if (data.result != WasmResultValues.Ok) {
       return;
     }
-    let bytes = data.value;
+    const bytes = data.value;
     if (bytes == null) {
       return;
     }
@@ -113,8 +113,8 @@ class Auth extends Context {
   onRequestHeaders(a: u32, end_of_stream: bool): FilterHeadersStatusValues {
     log(LogLevelValues.debug, "onRequestHeaders called!");
     // make an http call to the auth cluster
-    let root_context = this.root_context as AuthRoot;
-    let value = stream_context.headers.request.get("x-auth");
+    const root_context = this.root_context as AuthRoot;
+    const value = stream_context.headers.request.get("x-auth");
     if (value == root_context.token) {
       return FilterHeadersStatusValues.Continue;
     }

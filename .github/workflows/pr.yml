@@ -7,7 +7,7 @@ on:
 jobs:
   check-pr:
     name: check-pr
-    runs-on: ubuntu-latest
+    runs-on: dokploy-x64
     steps:
     - name: Checkout repository
       uses: actions/checkout@v5

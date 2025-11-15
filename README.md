@@ -1,3 +1,4 @@
+[![npm-publish](https://github.com/CharlesJones88/proxy-runtime/actions/workflows/npm-publish.yml/badge.svg)](https://github.com/CharlesJones88/proxy-runtime/actions/workflows/npm-publish.yml)
 How to use the SDK:
 
 # Local development

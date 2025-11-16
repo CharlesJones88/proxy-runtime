@@ -82,6 +82,16 @@ class ArrayBufferReference {
   }
 }
 
+class BufferResult {
+  buffer: ArrayBuffer;
+  result: imports.WasmResult;
+
+  constructor(buffer: ArrayBuffer, result: imports.WasmResult) {
+    this.buffer = buffer;
+    this.result = result;
+  }
+}
+
 const globalArrayBufferReference = new ArrayBufferReference();
 const globalU32Ref = new Reference<u32>();
 const globalLogLevelRef = new Reference<imports.LogLevel>();
@@ -815,7 +825,7 @@ export function get_buffer_bytes(
   typ: BufferTypeValues,
   start: u32,
   length: u32,
-): ArrayBuffer {
+): BufferResult {
   const result = imports.proxy_get_buffer_bytes(
     typ,
     start,
@@ -823,12 +833,12 @@ export function get_buffer_bytes(
     globalArrayBufferReference.bufferPtr(),
     globalArrayBufferReference.sizePtr(),
   );
-  // TODO: return the result as well. not sure what the best way to do this as it doesn't seem that
-  // assembly scripts supports tuples.
-  if (result == WasmResultValues.Ok) {
-    return globalArrayBufferReference.toArrayBuffer();
-  }
-  return new ArrayBuffer(0);
+  const buffer =
+    result == WasmResultValues.Ok
+      ? globalArrayBufferReference.toArrayBuffer()
+      : new ArrayBuffer(0);
+
+  return new BufferResult(buffer, result);
 }
 
 // returning tuples is not supported.
@@ -962,9 +972,11 @@ export function done(): WasmResultValues {
   return imports.proxy_done();
 }
 
-//Only exporting this function while we are still working on the http call support.
-//Once we decided how to read http response headers and pass those to the callback function,
-// we should remove this export and make sure this proxy call is only made thru BaseContext.setEffectiveContext().
+/**
+ * Only exporting this function while we are still working on the http call support.
+ * Once we decided how to read http response headers and pass those to the callback function,
+ * we should remove this export and make sure this proxy call is only made thru BaseContext.setEffectiveContext().
+ */
 export function proxy_set_effective_context(_id: u32): WasmResultValues {
   const result = imports.proxy_set_effective_context(_id);
   if (result != WasmResultValues.Ok) {
@@ -1036,7 +1048,9 @@ export abstract class BaseContext {
     }
   }
 
-  // Called when the VM is being torn down.
+  /**
+   * Called when the VM is being torn down.
+   */
   onDone(): bool {
     log(
       LogLevelValues.debug,
@@ -1045,7 +1059,9 @@ export abstract class BaseContext {
     return true;
   }
 
-  // Called when the VM is being torn down.
+  /**
+   * Called when the VM is being torn down.
+   */
   onDelete(): void {
     log(
       LogLevelValues.debug,
@@ -1055,7 +1071,7 @@ export abstract class BaseContext {
 }
 
 /**
- * Wrapper around http callbacks. When AS script supports closures, we can refactor \ remove this.
+ * Wrapper around http callbacks. When AS script supports closures, we can refactor/remove this.
  */
 export class HttpCallback {
   origin_context: BaseContext;
@@ -1064,6 +1080,7 @@ export class HttpCallback {
     headers: u32,
     body_size: usize,
     trailers: u32,
+    cancelled: bool,
   ) => void;
   constructor(
     origin_context: BaseContext,
@@ -1072,12 +1089,14 @@ export class HttpCallback {
       headers: u32,
       body_size: usize,
       trailers: u32,
+      cancelled: bool,
     ) => void,
   ) {
     this.origin_context = origin_context;
     this.cb = cb;
   }
 }
+
 class GrpcCallback {
   ctx: Object;
   cb: (c: Context) => void;
@@ -1095,6 +1114,7 @@ export class RootContext extends BaseContext {
   private configuration_: string = "";
   private http_calls_: Map<u32, HttpCallback> = new Map();
   private grpc_calls_: Map<u32, GrpcCallback> = new Map();
+  private foreign_calls_: Map<u32, BufferResult> = new Map();
 
   constructor(context_id: u32) {
     super(context_id);
@@ -1113,7 +1133,9 @@ export class RootContext extends BaseContext {
     return new Context(context_id, this);
   }
 
-  // Cancels all pending http requests. Called automatically on onDone.
+  /**
+   * Cancels all pending http requests. Called automatically on onDone.
+   */
   cancelPendingRequests(): void {
     log(
       LogLevelValues.debug,
@@ -1121,23 +1143,17 @@ export class RootContext extends BaseContext {
     );
     const callbacks = this.http_calls_.values();
     for (let i = 0; i < callbacks.length; ++i) {
-      // Calling callbacks with no response
-      // TODO: return some parameter telling the filter that these requests were canceled.
-      callbacks[i].cb(callbacks[i].origin_context, 0, 0, 0);
+      // Calling callbacks with cancellation flag set to true to notify the filter
+      callbacks[i].cb(callbacks[i].origin_context, 0, 0, 0, true);
     }
-    const keys = this.http_calls_.keys();
-    for (let i = 0; i < keys.length; ++i) {
-      const key = keys[i];
-      // TODO: cancel pending http requests and call callbacks with failure?
-      // when it becomes possible in the proxy.
-    }
+
     this.http_calls_.clear();
   }
 
-/**
- * Can be used to validate the configuration (e.g. in the control plane). Returns false if the
- * configuration is invalid.
- */ 
+  /**
+   * Can be used to validate the configuration (e.g. in the control plane). Returns false if the
+   * configuration is invalid.
+   */
   validateConfiguration(configuration_size: usize): bool {
     log(
       LogLevelValues.debug,
@@ -1214,6 +1230,36 @@ export class RootContext extends BaseContext {
   }
 
   /**
+   * Called when a registered foreign callback function_id is called.
+   */
+  onForeignFunction(function_id: u32, data_size: u32): void {
+    log(
+      LogLevelValues.debug,
+      "context id: " +
+        this.context_id.toString() +
+        ": onForeignFunction(function_id:" +
+        function_id.toString() +
+        ", data_size:" +
+        data_size.toString() +
+        ")",
+    );
+
+    const bufferResult = get_buffer_bytes(
+      BufferTypeValues.CallData,
+      0,
+      data_size,
+    );
+    this.foreign_calls_.set(function_id, bufferResult);
+  }
+
+  getForeignFunctionResult(function_id: u32): BufferResult | null {
+    if (!this.foreign_calls_.has(function_id)) {
+      return null;
+    }
+    return this.foreign_calls_.get(function_id);
+  }
+
+  /**
    * Called when queue is ready
    */
   onQueueReady(token: u32): void {
@@ -1270,6 +1316,7 @@ export class RootContext extends BaseContext {
       headers: u32,
       body_size: usize,
       trailers: u32,
+      cancelled: bool,
     ) => void,
   ): WasmResultValues {
     log(
@@ -1357,7 +1404,7 @@ export class RootContext extends BaseContext {
       );
       this.http_calls_.delete(token);
       setEffectiveContext(callback.origin_context.context_id);
-      callback.cb(callback.origin_context, headers, body_size, trailers);
+      callback.cb(callback.origin_context, headers, body_size, trailers, false);
     } else {
       log(
         LogLevelValues.error,
@@ -1561,7 +1608,9 @@ export function ensureRootContext(root_context_id: u32): RootContext {
   return root_context;
 }
 
-// create a context if doesnt exist.
+/**
+ * create a context if doesn't exist.
+ */
 export function ensureContext(context_id: u32, root_context_id: u32): void {
   log(
     LogLevelValues.debug,
@@ -1598,9 +1647,11 @@ export function ensureContext(context_id: u32, root_context_id: u32): void {
 export function getBaseContext(context_id: u32): BaseContext {
   return context_map.get(context_id) as BaseContext;
 }
+
 export function getContext(context_id: u32): Context {
   return context_map.get(context_id) as Context;
 }
+
 export function getRootContext(context_id: u32): RootContext {
   return context_map.get(context_id) as RootContext;
 }

@@ -66,7 +66,7 @@ class AuthSingleton extends RootContext {
           0,
           body_size
         );
-        set_shared_data("data", bytes);
+        set_shared_data("data", bytes.buffer);
       }
     );
   }

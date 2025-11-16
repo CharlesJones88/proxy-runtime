@@ -86,7 +86,7 @@ class Auth extends Context {
           body_size as u32
         );
         log(LogLevelValues.debug, "auth body: " + String.UTF8.decode(buf.buffer));
-        log(LogLevelValues.debug, "auth body result: " + buf.result);
+        log(LogLevelValues.debug, "auth body result: " + buf.result.toString());
 
         if (allow) {
           stream_context.headers.request.add("added-header", "authorized");

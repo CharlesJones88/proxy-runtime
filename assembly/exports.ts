@@ -33,7 +33,8 @@ export function proxy_on_tick(root_context_id: u32): void {
 }
 
 export function proxy_on_foreign_function(root_context_id: u32, function_id: u32, data_size: u32): void {
-  // TODO: implement me
+  const root_context = getRootContext(root_context_id);
+  root_context.onForeignFunction(function_id, data_size);
 }
 
 export function proxy_on_queue_ready(root_context_id: u32, token: u32): void {

@@ -7,11 +7,11 @@
     "docs": "typedoc --out ./docs assembly --ignoreCompilerErrors --name 'AssemblyScript Proxy Runtime'"
   },
   "devDependencies": {
-    "assemblyscript": "^0.28.9",
+    "assemblyscript": "^0.28.17",
     "assemblyscript-prettier": "^3.0.1",
     "http-server": "^0.12.3",
     "local-web-server": "^3.0.7",
-    "minimist": ">=1.2.2",
+    "minimist": ">=1.2.8",
     "prettier": "^3.6.2",
     "typedoc": "^0.28.14"
   },

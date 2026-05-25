@@ -12,8 +12,8 @@ importers:
         specifier: ^0.28.17
         version: 0.28.17
       assemblyscript-prettier:
-        specifier: ^3.0.1
-        version: 3.0.1(prettier@3.6.2)
+        specifier: ^3.0.4
+        version: 3.0.4(prettier@3.6.2)
       local-web-server:
         specifier: ^5.4.0
         version: 5.4.0
@@ -80,8 +80,8 @@ packages:
     resolution: {integrity: sha512-SGDvmg6QTYiTxCBkYVmThcoa67uLl35pyzRHdpCGBOcqFy6BtwnphoFPk7LhJshD+Yk1Kt35WGWeZPTgwR4Fhw==}
     engines: {node: '>=12.17'}
 
-  assemblyscript-prettier@3.0.1:
-    resolution: {integrity: sha512-q5D9rJOr1xG8p2MdcAF3wvIBPrmHaKgenJbmYrwM1T96sHKFeTOfCtgHHmrDnrqoly7wSGfWtbE84omC1IUJEA==}
+  assemblyscript-prettier@3.0.4:
+    resolution: {integrity: sha512-4NSKW+M9jSlyRQSteMnWx2E7bPceDWDl90vhwLOkXxwdAJQirWdFM5RqSdTYfgoH7ex1LhEaLTYaiZwMNTfm1Q==}
     peerDependencies:
       prettier: ^3.0.0
 
@@ -838,7 +838,7 @@ snapshots:
 
   array-back@6.2.3: {}
 
-  assemblyscript-prettier@3.0.1(prettier@3.6.2):
+  assemblyscript-prettier@3.0.4(prettier@3.6.2):
     dependencies:
       assemblyscript: 0.27.37
       prettier: 3.6.2

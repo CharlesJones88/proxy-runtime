@@ -7,7 +7,7 @@
   },
   "devDependencies": {
     "assemblyscript": "^0.28.17",
-    "assemblyscript-prettier": "^3.0.1",
+    "assemblyscript-prettier": "^3.0.4",
     "local-web-server": "^5.4.0",
     "prettier": "^3.6.2"
   },

@@ -1,4 +1,7 @@
-[![npm-publish](https://github.com/CharlesJones88/proxy-runtime/actions/workflows/npm-publish.yml/badge.svg)](https://github.com/CharlesJones88/proxy-runtime/actions/workflows/npm-publish.yml)
+[![npm-publish](https://github.com/CharlesJones88/proxy-runtime/actions/workflows/npm-publish.yml/badge.svg)](https://github.com/CharlesJones88/proxy-runtime/actions/workflows/npm-publish.
+
+This is a fork of https://github.com/solo-io/proxy-runtime/ maintained to address an incompatibility. 
+Modified by Charles Jones in 2026.
 
 How to use the SDK:
 

@@ -13,7 +13,7 @@
     "local-web-server": "^3.0.7",
     "minimist": ">=1.2.8",
     "prettier": "^3.6.2",
-    "typedoc": "^0.28.14"
+    "typedoc": "^0.28.19"
   },
   "name": "@charlesjones88/proxy-runtime",
   "description": "Use this SDK to write extensions for the proxy WASM ABI",

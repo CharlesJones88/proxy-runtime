@@ -13,8 +13,8 @@ importers:
   .:
     devDependencies:
       assemblyscript:
-        specifier: ^0.28.17
-        version: 0.28.17
+        specifier: ^0.28.18
+        version: 0.28.18
       assemblyscript-prettier:
         specifier: ^3.0.4
         version: 3.0.4(prettier@3.8.3)
@@ -94,8 +94,8 @@ packages:
     engines: {node: '>=18', npm: '>=10'}
     hasBin: true
 
-  assemblyscript@0.28.17:
-    resolution: {integrity: sha512-+S0Y7pwLiJngik0bt63XAswcN3Mu0szjvl2aCRWJ9U+5214e93HIt1waTBGFq0yLa8LJBBziw95BaAs5FNfz5Q==}
+  assemblyscript@0.28.18:
+    resolution: {integrity: sha512-NWvSjTS0bC0SVTLdJ4x8M0fezsFmYvGk+dIXGQZnvSSvnl/6PsY+kdLJ+pcS1idkEOHtGQMBtSSUyLBXH2gn5w==}
     engines: {node: '>=20', npm: '>=10'}
     hasBin: true
 
@@ -826,7 +826,7 @@ snapshots:
       binaryen: 116.0.0-nightly.20240114
       long: 5.3.2
 
-  assemblyscript@0.28.17:
+  assemblyscript@0.28.18:
     dependencies:
       binaryen: 129.0.0-nightly.20260428
       long: 5.3.2

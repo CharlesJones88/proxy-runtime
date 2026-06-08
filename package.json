@@ -6,7 +6,7 @@
     "server": "ws --log.format dev"
   },
   "devDependencies": {
-    "assemblyscript": "^0.28.17",
+    "assemblyscript": "^0.28.18",
     "assemblyscript-prettier": "^3.0.4",
     "local-web-server": "^5.4.0",
     "prettier": "^3.8.3"

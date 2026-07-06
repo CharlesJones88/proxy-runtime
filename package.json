@@ -9,7 +9,7 @@
     "assemblyscript": "^0.28.17",
     "assemblyscript-prettier": "^3.0.4",
     "local-web-server": "^5.4.0",
-    "prettier": "^3.8.3"
+    "prettier": "^3.9.4"
   },
   "name": "@charlesjones88/proxy-runtime",
   "description": "Use this SDK to write extensions for the proxy WASM ABI",

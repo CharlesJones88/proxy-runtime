@@ -17,13 +17,13 @@ importers:
         version: 0.28.17
       assemblyscript-prettier:
         specifier: ^3.0.4
-        version: 3.0.4(prettier@3.8.3)
+        version: 3.0.4(prettier@3.9.5)
       local-web-server:
         specifier: ^5.4.0
         version: 5.4.0
       prettier:
-        specifier: ^3.8.3
-        version: 3.8.3
+        specifier: ^3.9.5
+        version: 3.9.5
 
 packages:
 
@@ -609,8 +609,8 @@ packages:
   path-to-regexp@6.3.0:
     resolution: {integrity: sha512-Yhpw4T9C6hPpgPeA28us07OJeqZ5EzQTkbfwuhsUg0c237RomFoETJgmp2sa3F/41gfLE6G5cqcYwznmeEeOlQ==}
 
-  prettier@3.8.3:
-    resolution: {integrity: sha512-7igPTM53cGHMW8xWuVTydi2KO233VFiTNyF5hLJqpilHfmn8C8gPf+PS7dUT64YcXFbiMGZxS9pCSxL/Dxm/Jw==}
+  prettier@3.9.5:
+    resolution: {integrity: sha512-/FVl766LpUfB5vXgCYOYa0MeV/441Ia99AeICQIQFTY/Nw0roZwULcXpku5i1/m5kt/baz+s4Zogspd839HSMg==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -816,10 +816,10 @@ snapshots:
 
   array-back@6.2.3: {}
 
-  assemblyscript-prettier@3.0.4(prettier@3.8.3):
+  assemblyscript-prettier@3.0.4(prettier@3.9.5):
     dependencies:
       assemblyscript: 0.27.37
-      prettier: 3.8.3
+      prettier: 3.9.5
 
   assemblyscript@0.27.37:
     dependencies:
@@ -1352,7 +1352,7 @@ snapshots:
 
   path-to-regexp@6.3.0: {}
 
-  prettier@3.8.3: {}
+  prettier@3.9.5: {}
 
   process-nextick-args@2.0.1: {}
 

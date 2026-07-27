@@ -13,8 +13,8 @@ importers:
   .:
     devDependencies:
       assemblyscript:
-        specifier: ^0.28.17
-        version: 0.28.17
+        specifier: ^0.28.20
+        version: 0.28.20
       assemblyscript-prettier:
         specifier: ^3.0.4
         version: 3.0.4(prettier@3.8.3)
@@ -94,8 +94,8 @@ packages:
     engines: {node: '>=18', npm: '>=10'}
     hasBin: true
 
-  assemblyscript@0.28.17:
-    resolution: {integrity: sha512-+S0Y7pwLiJngik0bt63XAswcN3Mu0szjvl2aCRWJ9U+5214e93HIt1waTBGFq0yLa8LJBBziw95BaAs5FNfz5Q==}
+  assemblyscript@0.28.20:
+    resolution: {integrity: sha512-5PM7GZpvcLypHcLmi30aP8mqm5HjU+LL3BdV1xDyA3USGtL2w+iMiUnhtH+vW8+2kOuHlAyPu7M+QgyEw5he1g==}
     engines: {node: '>=20', npm: '>=10'}
     hasBin: true
 
@@ -110,8 +110,8 @@ packages:
     resolution: {integrity: sha512-0GZrojJnuhoe+hiwji7QFaL3tBlJoA+KFUN7ouYSDGZLSo9CKM8swQX8n/UcbR0d1VuZKU+nhogNzv423JEu5A==}
     hasBin: true
 
-  binaryen@129.0.0-nightly.20260428:
-    resolution: {integrity: sha512-RpjRVPZw8NOhkGzx3tTaKYdv4C+zO1VVI0VB9GSCNLM81flHOAZUwRJTLDM3Hqco3OmwB8hTLpkkpMSJjUfHXw==}
+  binaryen@131.0.0-nightly.20260721:
+    resolution: {integrity: sha512-AAQIkhfbYXh4FBObwBrlO+5L+6Rp6OOMOjh6AdT0M+GLNLyrwKWgtW+EzmizNgx9CWDfTJPfDtKoZi62QESbtg==}
     hasBin: true
 
   byte-size@6.2.0:
@@ -826,9 +826,9 @@ snapshots:
       binaryen: 116.0.0-nightly.20240114
       long: 5.3.2
 
-  assemblyscript@0.28.17:
+  assemblyscript@0.28.20:
     dependencies:
-      binaryen: 129.0.0-nightly.20260428
+      binaryen: 131.0.0-nightly.20260721
       long: 5.3.2
 
   basic-auth@2.0.1:
@@ -839,7 +839,7 @@ snapshots:
 
   binaryen@116.0.0-nightly.20240114: {}
 
-  binaryen@129.0.0-nightly.20260428: {}
+  binaryen@131.0.0-nightly.20260721: {}
 
   byte-size@6.2.0: {}
 
